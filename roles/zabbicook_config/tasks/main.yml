@@ -1,0 +1,14 @@
+---
+  # In the zabbicook_config role, the configuration file of zabbicook is placed and zabbicook is executed
+
+- name: create zabbicook configuration files
+  template:
+    src: "{{ item }}"
+    dest: "{{ zabbicook_dir }}/{{ item | basename | regex_replace('\\.j2', '') }}"
+    mode: 0644
+  become: yes
+  with_fileglob:
+    - ../templates/*.j2
+
+# Run the zabbicook.
+- include: ../../zabbicook/tasks/execute.yml

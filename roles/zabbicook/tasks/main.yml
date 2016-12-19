@@ -1,0 +1,16 @@
+---
+  # This task installs Zabbicook on the target host.
+
+- name: check whether the zabbicook-{{ zabbicook_version }} is installed
+  stat: path={{ zabbicook_bin }}
+  register: zabbicook_file
+
+- name: wget zabbicook jar
+  get_url:
+    url: "{{ zabbicook_zip_url }}"
+    dest: "{{ zabbicook_tmp }}/{{ zabbicook_zip_name }}"
+  when: not zabbicook_file.stat.exists
+
+- name: unarchive zabbicook zip
+  command: unzip {{ zabbicook_zip_name }} chdir={{ zabbicook_tmp }}
+  when: not zabbicook_file.stat.exists

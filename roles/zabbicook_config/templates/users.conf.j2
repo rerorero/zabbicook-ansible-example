@@ -1,0 +1,35 @@
+include "usergroup.conf"
+
+users: [
+
+  {% for user in users %}
+
+  {
+    user: {
+      alias: {{ user.name }}
+      name: {{ user.name }}
+      type: user
+    }
+
+    groups: [
+      ${myUserGroupName}
+    ]
+
+    // initial password is same as user name
+    password: {{ user.name }}
+    initialPassword: true
+
+    media: [
+      {
+        enabled: true
+        type: Email
+        whenActive: "1-7,00:00-24:00"
+        sendTo: "{{ user.mailto }}"
+        severity: [disaster, information, average, classified, high, warning]
+      }
+    ]
+  }
+
+  {% endfor %}
+]
+

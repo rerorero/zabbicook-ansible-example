@@ -1,0 +1,17 @@
+---
+  # This task executes zabbicook from the target host and reflects the configuration file.
+
+  # Change the password of the administrator user.
+  # Specify the '- json' option to get the result
+- name: set admin password
+  command: "{{ zabbicook_bin }} --uri {{ zabbicook_api_url }} --change-pass --user {{ zabbix_admin_user }} --pass {{ zabbix_admin_default_pass }} --new-pass {{ zabbix_admin_pass }} --json"
+  register: result
+  changed_when: (result.rc == 0) and ((result.stdout|from_json)['report']['total'] > 0)
+
+  # reflects the configuration file.
+  # Specify the '- json' option to get the result
+- name: configure zabbicook
+  command: "{{ zabbicook_bin }} -f {{ zabbicook_conf_path }} -i {{ zabbicook_api_url }} -u {{ zabbix_admin_user }} -p {{ zabbix_admin_pass }} --json"
+  register: result
+  changed_when: (result.rc == 0) and ((result.stdout|from_json)['report']['total'] > 0)
+

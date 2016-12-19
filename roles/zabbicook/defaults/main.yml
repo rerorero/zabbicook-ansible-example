@@ -1,0 +1,24 @@
+---
+# Zabbicook version
+# See:  https://github.com/rerorero/zabbicook/releases
+zabbicook_version: 0.1.5
+zabbicook_zip_name: "zabbicook-{{ zabbicook_version }}.zip"
+zabbicook_zip_url: "https://github.com/rerorero/zabbicook/releases/download/v{{ zabbicook_version }}/{{ zabbicook_zip_name }}"
+
+# Zabbicook installation directory
+zabbicook_tmp: /tmp
+zabbicook_dir: "{{ zabbicook_tmp }}/zabbicook-{{ zabbicook_version }}"
+zabbicook_bin: "{{ zabbicook_dir }}/zabbicook"
+
+# The location of the setting file. It is the same as the installation place of Zabbicook in this example.
+zabbicook_conf_path: "{{ zabbicook_dir }}/zabbicook.conf"
+
+# URL of Zabbix server.
+zabbicook_api_url: "http://localhost:8080/"
+
+# Name and password of the administrator user, which is set in the initial state of Zabbix installation
+zabbix_admin_user: Admin
+zabbix_admin_default_pass: zabbix
+
+# Password after changing Zabbix Admin user. Let's securely manage it by passing it as a vault or environment variable.
+zabbix_admin_pass: newpassword

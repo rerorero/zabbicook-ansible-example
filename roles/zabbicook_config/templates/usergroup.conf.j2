@@ -1,0 +1,23 @@
+include "hostgroup.conf"
+
+// If you want to  define your own variables, be sure to define them as global scope.
+myUserGroupName: "My User Group"
+
+userGroups: [
+  {
+    userGroup {
+      name: ${myUserGroupName}
+    }
+
+    permissions: [
+      {
+        hostgroup: "My HostGroup 1"
+        permission: readOnly
+      }
+      {
+        hostgroup: "My HostGroup 2"
+        permission: readWrite
+      }
+    ]
+  }
+]

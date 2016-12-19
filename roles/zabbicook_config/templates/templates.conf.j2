@@ -1,0 +1,79 @@
+include "hostgroup.conf"
+include "colors.conf"
+
+maillogSumKey: "vfs.file.cksum[/var/log/maillog]"
+
+messageLogKey: "log[/var/log/messages]"
+
+myTemplate {
+  template: {
+    name: "My Lovely Template"
+  }
+
+  groups: [
+    "My HostGroup 1"
+    "My HostGroup 2"
+  ]
+
+  linkedTemplates: [
+    "Template OS Linux"
+  ]
+
+  items: [
+    {
+      name: "Check sum of /var/log/maillog"
+      key: ${maillogSumKey}
+      type: ZabbixAgent
+      valueType: unsigned
+      interval: 60
+      history: 30
+    }
+    {
+      name: "messages"
+      key: ${messageLogKey}
+      type: ZabbixAgentActive
+      valueType: log
+      interval: 30
+      history: 30
+    }
+  ]
+
+  triggers: [
+    {
+      trigger: {
+        name: "maillog has changed"
+        expression: "{"${myTemplate.template.name}":"${maillogSumKey}".diff(0)}>0"
+        description: "Check sum of maillog"
+        severity: information
+      }
+    }
+
+    {
+      trigger: {
+        name: "errors in /var/log/messages"
+        expression: "{"${myTemplate.template.name}":"${messageLogKey}".regexp(ERROR)}<>0 and {"${myTemplate.template.name}":"${messageLogKey}".nodata(300)}=0"
+        priority: high
+      }
+    }
+  ]
+
+  graphs: [
+    {
+      graph: {
+        name: my funky graph
+        height: 200
+        width: 900
+      }
+
+      items: [
+        {% for gitem in graphItems %}
+          { itemName: "{{ gitem }}", color: ${colors.{{ loop.index0 }}} }
+        {% endfor %}
+      ]
+    }
+  ]
+}
+
+templates: [
+  ${myTemplate}
+]

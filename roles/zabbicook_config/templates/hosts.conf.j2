@@ -1,0 +1,26 @@
+include "hostgroup.conf"
+include "templates.conf"
+
+hosts: [
+  {
+    host { 
+      name: "local host"
+    } 
+
+    groups: [ "My HostGroup 1" ]
+
+    interfaces: [
+      {
+        type: agent
+        connectTo: ip
+        ip: "192.168.0.1"
+        port: 10050
+        default: true
+      }
+    ]
+
+    templates: [
+      ${myTemplate.template.name}
+    ]
+  }
+]

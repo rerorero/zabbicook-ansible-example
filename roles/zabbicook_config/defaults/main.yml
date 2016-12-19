@@ -1,0 +1,14 @@
+---
+
+# Variables used in setting files.
+
+users:
+  - name: Alice
+    mailto: alice@example.com
+  - name: Bob
+    mailto: bob@example.com
+
+graphItems:
+  - CPU user time
+  - CPU iowait time
+  - CPU idle time
