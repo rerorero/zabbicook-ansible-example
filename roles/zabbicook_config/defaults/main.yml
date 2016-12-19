@@ -9,6 +9,5 @@ users:
     mailto: bob@example.com
 
 graphItems:
-  - CPU user time
-  - CPU iowait time
-  - CPU idle time
+  - Free swap space
+  - Number of processes

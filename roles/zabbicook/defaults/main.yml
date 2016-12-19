@@ -21,4 +21,4 @@ zabbix_admin_user: Admin
 zabbix_admin_default_pass: zabbix
 
 # Password after changing Zabbix Admin user. Let's securely manage it by passing it as a vault or environment variable.
-zabbix_admin_pass: newpassword
+zabbix_admin_pass: zabbix
